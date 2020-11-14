@@ -1,0 +1,74 @@
+@startuml
+
+title 特急料金
+
+namespace domain {
+    namespace super_express_surcharge {
+        class NotDiscountedSuperExpressSurchargeCalculationDomainService {
+            {static} NotDiscountedSuperExpressSurcharge calculate(\n  Amount,\n  SeatType,\n  DepartureMonthDay\n)
+        }
+        class NotDiscountedFreeSeatSuperExpressSurcharge {
+            Amount
+        }
+        class SeasonalVariationNotAdjustedReservedSeatSuperExpressSurcharge {
+            Amount
+            NotDiscountedReservedSeatSuperExpressSurcharge adjust( SeasonalVariationAmount )
+        }
+        class NotDiscountedReservedSeatSuperExpressSurcharge {
+            Amount
+        }
+        class SeasonalVariationAmount {
+            Amount
+            {static} SeasonalVariationAmount from( DepartureMonthDay )
+        }
+        class NotDiscountedSuperExpressSurcharge {
+            Amount
+            {static} NotDiscountedSuperExpressSurcharge from( NotDiscountedFreeSeatSuperExpressSurcharge )
+            {static} NotDiscountedSuperExpressSurcharge from( NotDiscountedReservedSeatSuperExpressSurcharge )
+        }
+
+        SeasonalVariationNotAdjustedReservedSeatSuperExpressSurcharge -[hidden]d- NotDiscountedFreeSeatSuperExpressSurcharge
+        NotDiscountedFreeSeatSuperExpressSurcharge -[hidden]r- NotDiscountedReservedSeatSuperExpressSurcharge
+
+        SeasonalVariationNotAdjustedReservedSeatSuperExpressSurcharge -d-> SeasonalVariationAmount
+
+        NotDiscountedSuperExpressSurchargeCalculationDomainService -d-> NotDiscountedFreeSeatSuperExpressSurcharge
+        NotDiscountedSuperExpressSurchargeCalculationDomainService -d-> SeasonalVariationNotAdjustedReservedSeatSuperExpressSurcharge
+        SeasonalVariationNotAdjustedReservedSeatSuperExpressSurcharge -d-> NotDiscountedReservedSeatSuperExpressSurcharge: create
+        NotDiscountedSuperExpressSurchargeCalculationDomainService -d-> NotDiscountedSuperExpressSurcharge
+        NotDiscountedSuperExpressSurcharge -u-> NotDiscountedFreeSeatSuperExpressSurcharge
+        NotDiscountedSuperExpressSurcharge -u-> NotDiscountedReservedSeatSuperExpressSurcharge
+    }
+
+    namespace common {
+        class Amount {}
+        class DepartureMonthDay {
+            MonthDay
+        }
+        enum Destination {
+            新大阪
+            姫路
+        }
+        class Passenger {}
+        enum SeatType {
+            自由席
+            指定席
+        }
+        enum TrainType {
+            のぞみ
+            ひかり
+        }
+
+        TrainType -[hidden]r- Destination
+        Destination -[hidden]r- Amount
+        Amount -[hidden]r- SeatType
+        SeatType -[hidden]r- DepartureMonthDay
+        DepartureMonthDay -[hidden]r- Passenger
+    }
+
+    domain.super_express_surcharge.NotDiscountedSuperExpressSurchargeCalculationDomainService -u-> domain.common.Amount
+    domain.super_express_surcharge.NotDiscountedSuperExpressSurchargeCalculationDomainService -u-> domain.common.SeatType
+    domain.super_express_surcharge.NotDiscountedSuperExpressSurchargeCalculationDomainService -u-> domain.common.DepartureMonthDay
+}
+
+@enduml
