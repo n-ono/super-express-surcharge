@@ -34,7 +34,7 @@ public class CatalogueRepositoryImpl implements CatalogueRepository {
                     getTrainType(trainType),
                     getSeatType(seatType),
                     getDestination(destination)))
-            .getAmountValue());
+            .getValue());
   }
 
   private String getTrainType(TrainType trainType) {

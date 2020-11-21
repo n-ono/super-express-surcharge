@@ -37,7 +37,7 @@ public class DiscountRepositoryImpl implements DiscountRepository {
                         passenger.getChildren(),
                         passenger.getAdults(),
                         getDepartureMonthDay(departureMonthDay)))
-                .getDiscountAmountValue()));
+                .getValue()));
   }
 
   private int getAmount(NotDiscountedSuperExpressSurcharge notDiscountedSuperExpressSurcharge) {

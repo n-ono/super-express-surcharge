@@ -6,5 +6,5 @@ import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DiscountResponse {
-  @Getter @Setter private int discountAmountValue;
+  @Getter @Setter private int value;
 }
