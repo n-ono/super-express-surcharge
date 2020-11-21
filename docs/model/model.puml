@@ -2,6 +2,15 @@
 
 title 特急料金
 
+skinparam package {
+    BackgroundColor e4d3e8
+}
+
+skinparam class {
+    BorderColor black
+    BackgroundColor white
+}
+
 namespace domain {
     namespace super_express_surcharge {
         class NotDiscountedSuperExpressSurchargeCalculationDomainService {
