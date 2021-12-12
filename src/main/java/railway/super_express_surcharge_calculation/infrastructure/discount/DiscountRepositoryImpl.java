@@ -18,7 +18,7 @@ import java.util.Objects;
 @AllArgsConstructor
 public class DiscountRepositoryImpl implements DiscountRepository {
   public static final String URL =
-      "http://discount:8080/discount_calculation/discount-super-express-surcharge?super-express-surcharge={superExpressSurcharge}&children={children}&adults={adults}&departure-month-day={departureMonthDay}";
+      "http://discount-api.discount.internal:8080/discount_calculation/discount-super-express-surcharge?super-express-surcharge={superExpressSurcharge}&children={children}&adults={adults}&departure-month-day={departureMonthDay}";
 
   @Autowired private final RestTemplate restTemplate;
 
